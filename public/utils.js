@@ -34,6 +34,7 @@ export function startGame() {
                 // console.log(colorList.length);
                 if (target === targetColor) {
                     const position = target.dataset.position;
+                    target.classList.add("check");
                     const audio = document.querySelector(`audio[data-audio="${position}"]`);
                     audio.currentTime = 0.1;
                     audio.play();

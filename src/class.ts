@@ -47,9 +47,16 @@ export class Simon {
     this.colorsForEachRound = [];
     this.round = 0;
     this.displayRound();
+    // this.cleanCheck();
     // this.getRound();
   }
+  // cleanCheck() {
+  //   for (let i of this.colorBoxes) {
+  //     i.classList.remove("check");
+  //   }
+  // }
   setColorsOfEachRound(n: number) {
+    // this.cleanCheck();
     for (let i = 0; i < n; i++) {
       const randomNumber = this.generateRandomNumber();
       this.colorsForEachRound.push(this.colorBoxes[randomNumber]);

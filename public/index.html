@@ -9,20 +9,30 @@
     <link rel="icon" href="data:;base64,=" />
   </head>
   <body>
-    <div class="circle">
-      <div class="deck"></div>
-      <div class="trapezoid top blink" data-position="top"></div>
-      <div class="trapezoid left blink" data-position="left"></div>
-      <div class="trapezoid right blink" data-position="right"></div>
-      <div class="trapezoid bottom blink" data-position="bottom"></div>
-      <button class="btn-start">start</button>
-    </div>
-    <div class="table">
-      <div><h1 class="round"></h1></div>
-      <div>
-        <h1>Hightest Score: <span class="score"></span></h1>
+    <div class="main-container">
+      <div class="circle-container">
+        <div class="circle">
+          <div class="deck"></div>
+          <div class="trapezoid top blink" data-position="top"></div>
+          <div class="trapezoid left blink" data-position="left"></div>
+          <div class="trapezoid right blink" data-position="right"></div>
+          <div class="trapezoid bottom blink" data-position="bottom"></div>
+          <button class="btn-start">start</button>
+        </div>
       </div>
-      <div class="help"></div>
+
+      <div class="table">
+        <div class="title-container">
+          <h1>Simon</h1>
+        </div>
+        <div class="round-container">
+          <h1>Round: <span class="round"></span></h1>
+        </div>
+        <div class="score-container">
+          <h1>Hightest Score: <span class="score"></span></h1>
+        </div>
+        <div class="help"></div>
+      </div>
     </div>
     <audio src="./sounds/drum-1.mp3" data-audio="top" preload="auto"></audio>
     <audio src="./sounds/drum-2.mp3" data-audio="bottom" preload="auto"></audio>

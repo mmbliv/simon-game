@@ -1,3 +1,39 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+/* main container */
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+}
+.circle-container {
+  width: 50%;
+}
+/* table */
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  /* align-items: center; */
+  justify-content: center;
+  padding-top: 10rem;
+  /* height: 100vh; */
+}
+.title-container {
+  text-align: center;
+  font-size: xx-large;
+  padding-bottom: 6rem;
+}
 /* btn */
 .btn-start {
   position: absolute;
@@ -16,17 +52,27 @@
   width: 14rem;
   border: 1px solid rebeccapurple;
   border-radius: 50%;
-
-  margin: auto;
-  margin-top: 20rem;
+  /* margin: auto; */
+  margin-top: 5rem;
 }
 .trapezoid {
   position: absolute;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   /* animation-name: moveIn;
   animation-duration: 1s;
   animation-fill-mode: forwards; */
+  transition: all 0.2s linear;
 }
+.trapezoid:hover {
+  scale: 1.1;
+}
+/* .check {
+  background-image: url(./imgs/check.png);
+  background-size: 2rem 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+} */
+
 .trapezoid.top {
   top: -7rem;
   height: 6rem;
@@ -61,31 +107,22 @@
 /* deck */
 .deck {
   position: absolute;
-  height: 40rem;
-  width: 40rem;
+  height: 35rem;
+  width: 35rem;
   border: 1px solid black;
   border-radius: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   top: 50%;
 }
-@keyframes moveIn {
-  /* 0% { */
-  /* top: -10rem;
-    transform: scale(1); */
-  /* } */
-  /* 50% { */
-  /* top: -5rem; */
-  /* transform: scale(0.5); */
-  /* } */
+/* @keyframes moveIn {
   100% {
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    /* transform: scale(0); */
   }
-}
+} */
 @keyframes blink {
   50% {
     opacity: 0;
