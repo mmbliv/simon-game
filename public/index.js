@@ -17,7 +17,7 @@ const simon = new Simon(colorBoxes);
 function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
         simon.start();
-        simon.setColorsOfEachRound(3);
+        simon.setColorsOfEachRound(8);
         console.log(simon.colorsForEachRound);
         yield simon.addBlinkToEachBox();
         console.log(simon.colorsForEachRound);

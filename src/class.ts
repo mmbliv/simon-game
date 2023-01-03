@@ -33,16 +33,21 @@ export class Simon {
   async addBlinkToEachBox() {
     for (let i = 0; i < this.colorsForEachRound.length; i++) {
       // await this.waitBlink(1);
-      this.colorsForEachRound[i].classList.add("blink");
-      console.log(i, "aa");
-      await this.waitBlink(5);
+      // this.colorsForEachRound[i].classList.add("blink");
+      this.colorsForEachRound[i].style.animationName = "blink";
+      console.log(this.colorsForEachRound[i].style.animationName, 9);
+      // console.log(i, "aa");
+      await this.waitBlink(1);
       console.log("wait");
-      console.log(i, "bb");
-      console.log(this.colorsForEachRound[i], i);
-      this.colorsForEachRound[i].classList.remove("blink");
-      console.log(this.colorsForEachRound[i], i);
+      // console.log(i, "bb");
+      console.log(this.colorsForEachRound[i].style.animationName, 10);
+      // this.colorsForEachRound[i].classList.remove("blink");
+      this.colorsForEachRound[i].style.animationName = "none";
+      await this.waitBlink(0.5);
+      console.log(this.colorsForEachRound[i].style.animationName, 10);
+      // console.log(this.colorsForEachRound[i], i);
       // await this.waitBlink(1);
-      console.log(i, "cc");
+      // console.log(i, "cc");
     }
   }
   waitBlink(sec: number) {

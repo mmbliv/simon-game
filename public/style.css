@@ -8,7 +8,7 @@
 }
 /* blink */
 .blink {
-  animation: blink 0.5s linear forwards;
+  animation: 0.5s linear forwards;
 }
 .circle {
   position: relative;
