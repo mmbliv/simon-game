@@ -16,7 +16,9 @@ export class Simon {
         this.scoreNode = scoreNode;
     }
     getRound() {
-        return ++this.round;
+        this.round++;
+        this.roundNode.textContent = this.round.toString();
+        return this.round;
     }
     generateRandomNumber() {
         return Math.floor(Math.random() * 4);
