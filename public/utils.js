@@ -17,25 +17,31 @@ const simon = new Simon(colorBoxes);
 // console.dir(colorBoxes[0]);
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
+        let round = 1;
         simon.start();
-        simon.setColorsOfEachRound(3);
+        simon.setColorsOfEachRound(round);
         //   console.log(simon.colorsForEachRound);
-        const colorList = yield simon.addBlinkToEachBox();
+        let colorList = yield simon.addBlinkToEachBox();
         //   console.log(colorList);
         //   console.log(simon.colorsForEachRound);
         function clickColor(e) {
-            const target = e.target;
-            const targetColor = colorList.shift();
-            // console.log(colorList.length);
-            // console.log("99999");
-            if (!colorList.length) {
-                console.log("you are right");
-                colorContainer.removeEventListener("click", clickColor);
-            }
-            if (target !== targetColor) {
-                colorContainer.removeEventListener("click", clickColor);
-                console.log("hhhhh");
-            }
+            return __awaiter(this, void 0, void 0, function* () {
+                const target = e.target;
+                const targetColor = colorList.shift();
+                // console.log(colorList.length);
+                // console.log("99999");
+                if (!colorList.length) {
+                    round++;
+                    simon.setColorsOfEachRound(round);
+                    colorList = yield simon.addBlinkToEachBox();
+                    //   console.log("you are right");
+                    //   colorContainer.removeEventListener("click", clickColor);
+                }
+                if (target !== targetColor) {
+                    colorContainer.removeEventListener("click", clickColor);
+                    console.log("hhhhh");
+                }
+            });
         }
         colorContainer.addEventListener("click", clickColor);
     });
