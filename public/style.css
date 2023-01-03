@@ -1,0 +1,76 @@
+/* btn */
+.btn-start {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  padding: 1rem;
+}
+/* blink */
+.blink {
+  animation: blink 0.5s linear forwards;
+}
+.circle {
+  position: relative;
+  height: 10rem;
+  width: 10rem;
+  border: 1px solid rebeccapurple;
+  border-radius: 50%;
+
+  margin: auto;
+  margin-top: 20rem;
+}
+.trapezoid {
+  position: absolute;
+  border: 1px solid green;
+  /* animation-name: moveIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards; */
+}
+.trapezoid.top {
+  top: -10rem;
+  height: 5rem;
+  width: 10rem;
+  background-color: aqua;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+}
+.trapezoid.right {
+  /* animation-name: moveIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards; */
+  right: -10rem;
+  height: 10rem;
+  width: 5rem;
+}
+.trapezoid.bottom {
+  height: 5rem;
+  width: 10rem;
+  bottom: -10rem;
+}
+.trapezoid.left {
+  height: 10rem;
+  width: 5rem;
+  left: -10rem;
+}
+@keyframes moveIn {
+  /* 0% { */
+  /* top: -10rem;
+    transform: scale(1); */
+  /* } */
+  /* 50% { */
+  /* top: -5rem; */
+  /* transform: scale(0.5); */
+  /* } */
+  100% {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* transform: scale(0); */
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
