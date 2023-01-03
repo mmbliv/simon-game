@@ -58,3 +58,7 @@ export function startGame() {
     });
 }
 // startGame();
+export const reSetGame = function () {
+    simon.reSetGame();
+    startGame();
+};

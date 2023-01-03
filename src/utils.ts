@@ -50,3 +50,8 @@ export async function startGame() {
   colorContainer.addEventListener("click", clickColor);
 }
 // startGame();
+export const reSetGame = function () {
+  simon.reSetGame();
+
+  startGame();
+};

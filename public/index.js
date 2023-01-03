@@ -1,5 +1,7 @@
 // import { Simon } from "./class.js";
-import { startGame } from "./utils.js";
+import { reSetGame } from "./utils.js";
+// import { startGame } from "./utils.js";
+const startBtn = document.querySelector(".btn-start");
 // const colorBoxes = document.querySelectorAll(
 //   ".trapezoid"
 // ) as NodeListOf<HTMLDivElement>;
@@ -9,4 +11,6 @@ import { startGame } from "./utils.js";
 // simon.setRandomColorToEachBox();
 // console.log(simon);
 // console.dir(colorBoxes[0]);
-startGame();
+// console.log(startBtn);
+startBtn.addEventListener("click", reSetGame);
+// startGame();

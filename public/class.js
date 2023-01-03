@@ -17,8 +17,12 @@ export class Simon {
     }
     getRound() {
         this.round++;
-        this.roundNode.textContent = this.round.toString();
+        // this.roundNode.textContent = this.round.toString();
+        this.displayRound();
         return this.round;
+    }
+    displayRound() {
+        this.roundNode.textContent = this.round.toString();
     }
     generateRandomNumber() {
         return Math.floor(Math.random() * 4);
@@ -38,6 +42,12 @@ export class Simon {
     }
     start() {
         this.setRandomColorToEachBox();
+    }
+    reSetGame() {
+        this.colorsForEachRound = [];
+        this.round = 0;
+        this.displayRound();
+        // this.getRound();
     }
     setColorsOfEachRound(n) {
         for (let i = 0; i < n; i++) {
