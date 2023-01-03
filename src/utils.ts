@@ -21,17 +21,30 @@ export async function startGame() {
   async function clickColor(e: MouseEvent) {
     const target = e.target as HTMLDivElement;
     const targetColor = colorList.shift();
+    // console.dir(target, "999999999");
     // console.log(colorList.length);
-    // console.log("99999");
-    if (!colorList.length) {
+
+    if (target === targetColor) {
+      const position = target.dataset.position;
+      const audio = document.querySelector(
+        `audio[data-audio="${position}"]`
+      )! as HTMLAudioElement;
+      audio.currentTime = 0.1;
+      audio.play();
+      //   setTimeout(() => audio.play(), 100);
+      //   audio.play();
+    }
+    if (target !== targetColor) {
+      const audio = document.querySelector(".lose-sound")! as HTMLAudioElement;
+      audio.play();
+      colorContainer.removeEventListener("click", clickColor);
+      console.log("hhhhh");
+    }
+    if (!colorList.length && target === targetColor) {
       simon.setColorsOfEachRound(simon.getRound());
       colorList = await simon.addBlinkToEachBox();
       //   console.log("you are right");
       //   colorContainer.removeEventListener("click", clickColor);
-    }
-    if (target !== targetColor) {
-      colorContainer.removeEventListener("click", clickColor);
-      console.log("hhhhh");
     }
   }
   colorContainer.addEventListener("click", clickColor);
