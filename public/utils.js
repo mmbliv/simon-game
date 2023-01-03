@@ -41,7 +41,7 @@ export function startGame() {
                     //   setTimeout(() => audio.play(), 100);
                     //   audio.play();
                 }
-                if (target !== targetColor) {
+                if (target !== targetColor && target.classList.contains("trapezoid")) {
                     const audio = document.querySelector(".lose-sound");
                     audio.play();
                     colorContainer.removeEventListener("click", clickColor);
