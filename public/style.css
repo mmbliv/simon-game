@@ -12,8 +12,8 @@
 }
 .circle {
   position: relative;
-  height: 10rem;
-  width: 10rem;
+  height: 14rem;
+  width: 14rem;
   border: 1px solid rebeccapurple;
   border-radius: 50%;
 
@@ -28,29 +28,42 @@
   animation-fill-mode: forwards; */
 }
 .trapezoid.top {
-  top: -10rem;
-  height: 5rem;
-  width: 10rem;
-  background-color: aqua;
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  top: -7rem;
+  height: 6rem;
+  width: 14rem;
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
 }
 .trapezoid.right {
   /* animation-name: moveIn;
   animation-duration: 1s;
   animation-fill-mode: forwards; */
-  right: -10rem;
-  height: 10rem;
-  width: 5rem;
+  clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
+  right: -7rem;
+  height: 14rem;
+  width: 6rem;
 }
 .trapezoid.bottom {
-  height: 5rem;
-  width: 10rem;
-  bottom: -10rem;
+  height: 6rem;
+  width: 14rem;
+  bottom: -7rem;
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
 }
 .trapezoid.left {
-  height: 10rem;
-  width: 5rem;
-  left: -10rem;
+  height: 14rem;
+  width: 6rem;
+  left: -7rem;
+  clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
+}
+/* deck */
+.deck {
+  position: absolute;
+  height: 40rem;
+  width: 40rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
 }
 @keyframes moveIn {
   /* 0% { */
