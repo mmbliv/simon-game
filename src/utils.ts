@@ -2,16 +2,18 @@ import { Simon } from "./class.js";
 const colorBoxes = document.querySelectorAll(
   ".trapezoid"
 ) as NodeListOf<HTMLDivElement>;
+const round = document.querySelector(".round")! as HTMLDivElement;
+const score = document.querySelector(".score")! as HTMLDivElement;
 const colorContainer = document.querySelector(".circle")! as HTMLDivElement;
-const simon = new Simon(colorBoxes);
+const simon = new Simon(colorBoxes, round, score);
 // console.log(simon.generateRandomNumber());
 // simon.setRandomColorToEachBox();
 // console.log(simon);
 // console.dir(colorBoxes[0]);
 export async function startGame() {
-  let round = 1;
+  //   let round = 1;
   simon.start();
-  simon.setColorsOfEachRound(round);
+  simon.setColorsOfEachRound(simon.getRound());
   //   console.log(simon.colorsForEachRound);
   let colorList = await simon.addBlinkToEachBox();
   //   console.log(colorList);
@@ -22,8 +24,7 @@ export async function startGame() {
     // console.log(colorList.length);
     // console.log("99999");
     if (!colorList.length) {
-      round++;
-      simon.setColorsOfEachRound(round);
+      simon.setColorsOfEachRound(simon.getRound());
       colorList = await simon.addBlinkToEachBox();
       //   console.log("you are right");
       //   colorContainer.removeEventListener("click", clickColor);

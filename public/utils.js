@@ -9,17 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Simon } from "./class.js";
 const colorBoxes = document.querySelectorAll(".trapezoid");
+const round = document.querySelector(".round");
+const score = document.querySelector(".score");
 const colorContainer = document.querySelector(".circle");
-const simon = new Simon(colorBoxes);
+const simon = new Simon(colorBoxes, round, score);
 // console.log(simon.generateRandomNumber());
 // simon.setRandomColorToEachBox();
 // console.log(simon);
 // console.dir(colorBoxes[0]);
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
-        let round = 1;
+        //   let round = 1;
         simon.start();
-        simon.setColorsOfEachRound(round);
+        simon.setColorsOfEachRound(simon.getRound());
         //   console.log(simon.colorsForEachRound);
         let colorList = yield simon.addBlinkToEachBox();
         //   console.log(colorList);
@@ -31,8 +33,7 @@ export function startGame() {
                 // console.log(colorList.length);
                 // console.log("99999");
                 if (!colorList.length) {
-                    round++;
-                    simon.setColorsOfEachRound(round);
+                    simon.setColorsOfEachRound(simon.getRound());
                     colorList = yield simon.addBlinkToEachBox();
                     //   console.log("you are right");
                     //   colorContainer.removeEventListener("click", clickColor);

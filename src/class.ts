@@ -1,9 +1,22 @@
 export class Simon {
   public colorBoxes: NodeListOf<HTMLDivElement>;
   public colorsForEachRound: HTMLDivElement[];
-  constructor(colorBoxes: NodeListOf<HTMLDivElement>) {
+  public round: number;
+  public roundNode: HTMLDivElement;
+  public scoreNode: HTMLDivElement;
+  constructor(
+    colorBoxes: NodeListOf<HTMLDivElement>,
+    roundNode: HTMLDivElement,
+    scoreNode: HTMLDivElement
+  ) {
     this.colorBoxes = colorBoxes;
     this.colorsForEachRound = [];
+    this.round = 0;
+    this.roundNode = roundNode;
+    this.scoreNode = scoreNode;
+  }
+  getRound() {
+    return ++this.round;
   }
   generateRandomNumber() {
     return Math.floor(Math.random() * 4);

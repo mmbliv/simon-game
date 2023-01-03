@@ -8,9 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export class Simon {
-    constructor(colorBoxes) {
+    constructor(colorBoxes, roundNode, scoreNode) {
         this.colorBoxes = colorBoxes;
         this.colorsForEachRound = [];
+        this.round = 0;
+        this.roundNode = roundNode;
+        this.scoreNode = scoreNode;
+    }
+    getRound() {
+        return ++this.round;
     }
     generateRandomNumber() {
         return Math.floor(Math.random() * 4);
