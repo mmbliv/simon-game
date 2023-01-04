@@ -16,6 +16,9 @@ export class Simon {
         this.scoreNode = scoreNode;
         this.abortController = {};
     }
+    setRoundToZero() {
+        this.round = 0;
+    }
     setAbortController() {
         this.abortController = new AbortController();
         return this.abortController;
@@ -75,18 +78,11 @@ export class Simon {
     }
     addBlinkToEachBox() {
         return __awaiter(this, void 0, void 0, function* () {
-            // this.abortController = new AbortController();
-            // const s = a.signal;
-            // abort.addEventListener("abort", () => {
-            //   return;
-            // });
-            // console.log("aborted");
             if (this.abortController.signal) {
                 return;
             }
             else {
                 yield this.waitBlink(2);
-                console.log(this.colorsForEachRound);
                 for (let i = 0; i < this.colorsForEachRound.length; i++) {
                     this.colorsForEachRound[i].style.animationName = "blink";
                     yield this.waitBlink(0.3);
@@ -95,15 +91,6 @@ export class Simon {
                 }
                 return this.colorsForEachRound;
             }
-            // await this.waitBlink(2);
-            // console.log(this.colorsForEachRound);
-            // for (let i = 0; i < this.colorsForEachRound.length; i++) {
-            //   this.colorsForEachRound[i].style.animationName = "blink";
-            //   await this.waitBlink(0.3);
-            //   this.colorsForEachRound[i].style.animationName = "none";
-            //   await this.waitBlink(0.1);
-            // }
-            // return this.colorsForEachRound;
         });
     }
     waitBlink(sec) {

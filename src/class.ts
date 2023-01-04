@@ -17,6 +17,9 @@ export class Simon {
     this.scoreNode = scoreNode;
     this.abortController = {};
   }
+  setRoundToZero() {
+    this.round = 0;
+  }
   setAbortController() {
     this.abortController = new AbortController();
     return this.abortController;
@@ -76,18 +79,10 @@ export class Simon {
     }
   }
   async addBlinkToEachBox() {
-    // this.abortController = new AbortController();
-    // const s = a.signal;
-
-    // abort.addEventListener("abort", () => {
-    //   return;
-    // });
-    // console.log("aborted");
     if (this.abortController.signal) {
       return;
     } else {
       await this.waitBlink(2);
-      console.log(this.colorsForEachRound);
       for (let i = 0; i < this.colorsForEachRound.length; i++) {
         this.colorsForEachRound[i].style.animationName = "blink";
 
@@ -97,31 +92,10 @@ export class Simon {
       }
       return this.colorsForEachRound;
     }
-    // await this.waitBlink(2);
-    // console.log(this.colorsForEachRound);
-    // for (let i = 0; i < this.colorsForEachRound.length; i++) {
-    //   this.colorsForEachRound[i].style.animationName = "blink";
-
-    //   await this.waitBlink(0.3);
-    //   this.colorsForEachRound[i].style.animationName = "none";
-    //   await this.waitBlink(0.1);
-    // }
-    // return this.colorsForEachRound;
   }
   waitBlink(sec: number) {
     return new Promise(function (res) {
       setTimeout(res, sec * 1000);
     });
   }
-  // abortWrapper(abort: AbortSignal): Promise<HTMLDivElement[]> {
-  //   return new Promise((res, rej) => {
-  //     const error = new DOMException("aborted!", "AbortError");
-
-  //     if (this.abortController.signal) {
-  //       rej(error);
-  //     } else {
-  //       res(this.addBlinkToEachBox());
-  //     }
-  //   });
-  // }
 }
