@@ -12,51 +12,51 @@ const colorBoxes = document.querySelectorAll(".trapezoid");
 const round = document.querySelector(".round");
 const score = document.querySelector(".score");
 const colorContainer = document.querySelector(".circle");
-const simon = new Simon(colorBoxes, round, score);
+const simon = new Simon(colorBoxes, round, score, colorContainer);
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
         simon.start();
         simon.setColorsOfEachRound(simon.getRound());
+        console.log("jojo");
         let colorList = yield simon.addBlinkToEachBox();
         if (!colorList) {
             return;
         }
-        function clickColor(e) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const target = e.target;
-                let targetColor;
-                if (target.classList.contains("trapezoid")) {
-                    targetColor = colorList.shift();
-                }
-                else {
-                    return;
-                }
-                if (target === targetColor) {
-                    const position = target.dataset.position;
-                    const audio = document.querySelector(`audio[data-audio="${position}"]`);
-                    audio.currentTime = 0.1;
-                    audio.play();
-                }
-                if (target !== targetColor && target.classList.contains("trapezoid")) {
-                    const audio = document.querySelector(".lose-sound");
-                    audio.play();
-                    colorContainer.removeEventListener("click", clickColor);
-                    simon.setRoundToZero();
-                }
-                if (!colorList.length && target === targetColor) {
-                    simon.setColorsOfEachRound(simon.getRound());
-                    colorList = yield simon.addBlinkToEachBox();
-                }
-            });
-        }
-        colorContainer.addEventListener("click", clickColor);
+        // async function clickColor(e: MouseEvent) {
+        //   const target = e.target as HTMLDivElement;
+        //   let targetColor;
+        //   if (target.classList.contains("trapezoid")) {
+        //     targetColor = colorList!.shift();
+        //   } else {
+        //     return;
+        //   }
+        //   if (target === targetColor) {
+        //     const position = target.dataset.position;
+        //     const audio = document.querySelector(
+        //       `audio[data-audio="${position}"]`
+        //     )! as HTMLAudioElement;
+        //     audio.currentTime = 0.1;
+        //     audio.play();
+        //   }
+        //   if (target !== targetColor && target.classList.contains("trapezoid")) {
+        //     const audio = document.querySelector(".lose-sound")! as HTMLAudioElement;
+        //     audio.play();
+        //     colorContainer.removeEventListener("click", clickColor);
+        //     simon.setRoundToZero();
+        //   }
+        //   if (!colorList!.length && target === targetColor) {
+        //     simon.setColorsOfEachRound(simon.getRound());
+        //     colorList = await simon.addBlinkToEachBox();
+        //   }
+        // }
+        colorContainer.addEventListener("click", simon.clickColor.bind(simon), {});
     });
 }
 // startGame();
-export const reSetGame = function () {
+export const reStartGame = function () {
     simon.reSetGame();
     startGame();
-    simon.abortController = {};
+    simon.setToggleAbort();
 };
 // show instruction
 const filter = document.querySelector(".js-filter");

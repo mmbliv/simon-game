@@ -8,13 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export class Simon {
-    constructor(colorBoxes, roundNode, scoreNode) {
+    constructor(colorBoxes, roundNode, scoreNode, colorsNode) {
         this.colorBoxes = colorBoxes;
         this.colorsForEachRound = [];
         this.round = 0;
         this.roundNode = roundNode;
         this.scoreNode = scoreNode;
         this.abortController = {};
+        this.colorsNode = colorsNode;
+        this.clickColor = this.clickColor.bind(this);
+        this.toggleAbort = false;
+    }
+    setToggleAbort() {
+        if (this.toggleAbort) {
+            this.toggleAbort = false;
+        }
     }
     setHighestScore() {
         if (!localStorage.high) {
@@ -67,16 +75,17 @@ export class Simon {
         this.setRandomColorToEachBox();
     }
     reSetGame() {
-        let signal;
+        // let signal;
         if (this.round > 1) {
-            const abortController = this.setAbortController();
-            signal = abortController.signals;
+            this.toggleAbort = true;
+            console.log(this.toggleAbort);
+            // console.log(signal, "ooooo");
         }
         this.setHighestScore();
         this.colorsForEachRound = [];
         this.round = 0;
         this.displayRound();
-        return signal;
+        // return signal;
     }
     setColorsOfEachRound(n) {
         for (let i = 0; i < n; i++) {
@@ -86,7 +95,9 @@ export class Simon {
     }
     addBlinkToEachBox() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.abortController.signal) {
+            if (this.toggleAbort) {
+                // console.log(this)
+                // console.log(this.abortController.signal, "00000jjjjj");
                 return;
             }
             else {
@@ -104,6 +115,37 @@ export class Simon {
     waitBlink(sec) {
         return new Promise(function (res) {
             setTimeout(res, sec * 1000);
+        });
+    }
+    clickColor(e) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(this, "aaaa");
+            const target = e.target;
+            let targetColor;
+            if (target.classList.contains("trapezoid")) {
+                // console.log(this);
+                targetColor = this.colorsForEachRound.shift();
+                console.log(targetColor);
+            }
+            else {
+                return;
+            }
+            if (target === targetColor) {
+                const position = target.dataset.position;
+                const audio = document.querySelector(`audio[data-audio="${position}"]`);
+                audio.currentTime = 0.1;
+                audio.play();
+            }
+            if (target !== targetColor && target.classList.contains("trapezoid")) {
+                const audio = document.querySelector(".lose-sound");
+                audio.play();
+                this.colorsNode.addEventListener("click", () => { }, {});
+                this.setRoundToZero();
+            }
+            if (!this.colorsForEachRound.length && target === targetColor) {
+                this.setColorsOfEachRound(this.getRound());
+                yield this.addBlinkToEachBox();
+            }
         });
     }
 }
