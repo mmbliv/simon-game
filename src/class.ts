@@ -126,37 +126,21 @@ export class Simon {
   }
 
   async clickColor(e: MouseEvent) {
-    console.log(this, "aaaa");
     const target = e.target as HTMLDivElement;
     let targetColor;
     if (target.classList.contains("trapezoid")) {
-      // console.log(this);
       targetColor = this.colorsForEachRound!.shift();
-      console.log(targetColor);
     } else {
       return;
     }
     if (target === targetColor) {
-      const position = target.dataset.position;
-      const audio = document.querySelector(
-        `audio[data-audio="${position}"]`
-      )! as HTMLAudioElement;
-      audio.currentTime = 0.1;
-      audio.play();
+      const position = target.dataset.position!;
+      this.playSound(position);
     }
     if (target !== targetColor && target.classList.contains("trapezoid")) {
-      const audio = document.querySelector(".lose-sound")! as HTMLAudioElement;
-      audio.play();
+      this.playSound("lose");
+
       this.stop = true;
-      // this.setAbortController();
-      // this.colorsNode.addEventListener(
-      //   "click",
-      //   () => {
-      //     console.log("aborted");
-      //     this.abortController.abort();
-      //   },
-      //   { signal: this.abortController.signal }
-      // );
       this.setRoundToZero();
     }
     if (!this.colorsForEachRound!.length && target === targetColor) {
@@ -164,5 +148,12 @@ export class Simon {
 
       await this.addBlinkToEachBox();
     }
+  }
+  playSound(position: string) {
+    const audio = document.querySelector(
+      `audio[data-audio="${position}"]`
+    )! as HTMLAudioElement;
+    audio.currentTime = 0.1;
+    audio.play();
   }
 }

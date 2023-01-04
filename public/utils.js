@@ -56,10 +56,8 @@ export function startGame() {
         // });
         let controller = simon.setAbortController();
         colorContainer.addEventListener("click", (e) => {
-            // controller = simon.abortController;
             if (simon.stop) {
                 controller.abort();
-                // simon.abortController = {};
                 simon.stop = false;
             }
             else {
