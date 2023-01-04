@@ -172,7 +172,17 @@ body {
   top: -7rem;
   background-color: rgba(149, 168, 92, 0.877);
 }
-
+.card-show {
+  position: absolute;
+  width: 70%;
+  padding: 3rem 2rem;
+  background-color: #daca92;
+  border: 2px solid black;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  border-radius: 3px;
+}
 @keyframes blink {
   50% {
     opacity: 0;
@@ -188,6 +198,9 @@ body {
     grid-template-columns: 1fr;
     gap: 15rem;
     margin-top: 5rem;
+  }
+  .filter-show {
+    top: -5rem;
   }
   .circle {
     /* left: 43%; */
@@ -218,6 +231,9 @@ body {
   .main-container {
     gap: 8rem;
     margin-top: 3rem;
+  }
+  .filter-show {
+    top: -3rem;
   }
   .title-container {
     font-size: larger;
