@@ -24,7 +24,13 @@ export function startGame() {
         function clickColor(e) {
             return __awaiter(this, void 0, void 0, function* () {
                 const target = e.target;
-                const targetColor = colorList.shift();
+                let targetColor;
+                if (target.classList.contains("trapezoid")) {
+                    targetColor = colorList.shift();
+                }
+                else {
+                    return;
+                }
                 if (target === targetColor) {
                     const position = target.dataset.position;
                     const audio = document.querySelector(`audio[data-audio="${position}"]`);

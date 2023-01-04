@@ -17,7 +17,23 @@ export class Simon {
     this.scoreNode = scoreNode;
     this.abortController = {};
   }
+  setHighestScore() {
+    if (!localStorage.high) {
+      // console.log("no");
+      localStorage.setItem("high", `${this.round}`);
+    } else {
+      // console.log("you");
+      if (this.round > +localStorage.high) {
+        localStorage.setItem("high", `${this.round}`);
+      }
+    }
+
+    this.scoreNode.textContent = localStorage.getItem("high");
+  }
+
   setRoundToZero() {
+    this.setHighestScore();
+
     this.round = 0;
   }
   setAbortController() {
@@ -26,11 +42,11 @@ export class Simon {
   }
   getRound() {
     this.round++;
-    // this.roundNode.textContent = this.round.toString();
     this.displayRound();
     return this.round;
   }
   displayRound() {
+    this.setHighestScore();
     this.roundNode.textContent = this.round.toString();
   }
   generateRandomNumber() {
@@ -50,6 +66,7 @@ export class Simon {
     });
   }
   start() {
+    this.setHighestScore();
     this.setRandomColorToEachBox();
   }
   reSetGame() {
@@ -58,21 +75,13 @@ export class Simon {
       const abortController = this.setAbortController();
       signal = abortController.signals;
     }
-
+    this.setHighestScore();
     this.colorsForEachRound = [];
     this.round = 0;
     this.displayRound();
     return signal;
-    // this.cleanCheck();
-    // this.getRound();
   }
-  // cleanCheck() {
-  //   for (let i of this.colorBoxes) {
-  //     i.classList.remove("check");
-  //   }
-  // }
   setColorsOfEachRound(n: number) {
-    // this.cleanCheck();
     for (let i = 0; i < n; i++) {
       const randomNumber = this.generateRandomNumber();
       this.colorsForEachRound.push(this.colorBoxes[randomNumber]);

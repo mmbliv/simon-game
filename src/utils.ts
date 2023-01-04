@@ -17,8 +17,12 @@ export async function startGame() {
   }
   async function clickColor(e: MouseEvent) {
     const target = e.target as HTMLDivElement;
-
-    const targetColor = colorList!.shift();
+    let targetColor;
+    if (target.classList.contains("trapezoid")) {
+      targetColor = colorList!.shift();
+    } else {
+      return;
+    }
     if (target === targetColor) {
       const position = target.dataset.position;
       const audio = document.querySelector(
