@@ -72,6 +72,15 @@ export const reStartGame = function () {
     startGame();
     simon.setToggleAbort();
 };
+// debounce
+function debounce(cb, ms) {
+    let timer;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => cb(), 1000);
+    };
+}
+export const game = debounce(reStartGame, 1000);
 // show instruction
 const filter = document.querySelector(".js-filter");
 const card = document.querySelector(".js-instruction-card");

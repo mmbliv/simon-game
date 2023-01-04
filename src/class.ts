@@ -112,7 +112,7 @@ export class Simon {
       let position;
       for (let i = 0; i < this.colorsForEachRound.length; i++) {
         this.colorsForEachRound[i].style.animationName = "blink";
-        position = this.colorsForEachRound[i].dataset.position;
+        position = this.colorsForEachRound[i].dataset.position!;
         this.playSound(position);
         await this.waitBlink(0.3);
         this.colorsForEachRound[i].style.animationName = "none";
