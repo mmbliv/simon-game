@@ -14,6 +14,11 @@ export class Simon {
         this.round = 0;
         this.roundNode = roundNode;
         this.scoreNode = scoreNode;
+        this.abortController = {};
+    }
+    setAbortController() {
+        this.abortController = new AbortController();
+        return this.abortController;
     }
     getRound() {
         this.round++;
@@ -44,9 +49,15 @@ export class Simon {
         this.setRandomColorToEachBox();
     }
     reSetGame() {
+        let signal;
+        if (this.round > 1) {
+            const abortController = this.setAbortController();
+            signal = abortController.signals;
+        }
         this.colorsForEachRound = [];
         this.round = 0;
         this.displayRound();
+        return signal;
         // this.cleanCheck();
         // this.getRound();
     }
@@ -64,27 +75,35 @@ export class Simon {
     }
     addBlinkToEachBox() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.waitBlink(2);
-            console.log(this.colorsForEachRound);
-            for (let i = 0; i < this.colorsForEachRound.length; i++) {
-                // await this.waitBlink(1);
-                // this.colorsForEachRound[i].classList.add("blink");
-                this.colorsForEachRound[i].style.animationName = "blink";
-                // console.log(this.colorsForEachRound[i].style.animationName, 9);
-                // console.log(i, "aa");
-                yield this.waitBlink(0.3);
-                // console.log("wait");
-                // console.log(i, "bb");
-                // console.log(this.colorsForEachRound[i].style.animationName, 10);
-                // this.colorsForEachRound[i].classList.remove("blink");
-                this.colorsForEachRound[i].style.animationName = "none";
-                yield this.waitBlink(0.1);
-                // console.log(this.colorsForEachRound[i].style.animationName, 10);
-                // console.log(this.colorsForEachRound[i], i);
-                // await this.waitBlink(1);
-                // console.log(i, "cc");
+            // this.abortController = new AbortController();
+            // const s = a.signal;
+            // abort.addEventListener("abort", () => {
+            //   return;
+            // });
+            // console.log("aborted");
+            if (this.abortController.signal) {
+                return;
             }
-            return this.colorsForEachRound;
+            else {
+                yield this.waitBlink(2);
+                console.log(this.colorsForEachRound);
+                for (let i = 0; i < this.colorsForEachRound.length; i++) {
+                    this.colorsForEachRound[i].style.animationName = "blink";
+                    yield this.waitBlink(0.3);
+                    this.colorsForEachRound[i].style.animationName = "none";
+                    yield this.waitBlink(0.1);
+                }
+                return this.colorsForEachRound;
+            }
+            // await this.waitBlink(2);
+            // console.log(this.colorsForEachRound);
+            // for (let i = 0; i < this.colorsForEachRound.length; i++) {
+            //   this.colorsForEachRound[i].style.animationName = "blink";
+            //   await this.waitBlink(0.3);
+            //   this.colorsForEachRound[i].style.animationName = "none";
+            //   await this.waitBlink(0.1);
+            // }
+            // return this.colorsForEachRound;
         });
     }
     waitBlink(sec) {
