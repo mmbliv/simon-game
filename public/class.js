@@ -18,6 +18,7 @@ export class Simon {
         this.colorsNode = colorsNode;
         this.clickColor = this.clickColor.bind(this);
         this.toggleAbort = false;
+        this.stop = false;
     }
     setToggleAbort() {
         if (this.toggleAbort) {
@@ -139,7 +140,16 @@ export class Simon {
             if (target !== targetColor && target.classList.contains("trapezoid")) {
                 const audio = document.querySelector(".lose-sound");
                 audio.play();
-                this.colorsNode.addEventListener("click", () => { }, {});
+                this.stop = true;
+                // this.setAbortController();
+                // this.colorsNode.addEventListener(
+                //   "click",
+                //   () => {
+                //     console.log("aborted");
+                //     this.abortController.abort();
+                //   },
+                //   { signal: this.abortController.signal }
+                // );
                 this.setRoundToZero();
             }
             if (!this.colorsForEachRound.length && target === targetColor) {

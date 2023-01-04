@@ -44,8 +44,24 @@ export async function startGame() {
   //     colorList = await simon.addBlinkToEachBox();
   //   }
   // }
-
-  colorContainer.addEventListener("click", simon.clickColor.bind(simon), {});
+  // const controller = simon.setAbortController();
+  // const signal = controller.signal;
+  // colorContainer.addEventListener("click", simon.clickColor.bind(simon), {
+  //   signal: controller.signal,
+  // });
+  let controller = simon.setAbortController();
+  colorContainer.addEventListener(
+    "click",
+    (e) => {
+      if (simon.stop) {
+        controller.abort();
+        simon.stop = false;
+      } else {
+        simon.clickColor.call(simon, e);
+      }
+    },
+    { signal: controller.signal }
+  );
 }
 // startGame();
 export const reStartGame = function () {
