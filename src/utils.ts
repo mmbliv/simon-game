@@ -51,3 +51,16 @@ export const reSetGame = function () {
   startGame();
   simon.abortController = {};
 };
+
+// show instruction
+const filter = document.querySelector(".js-filter")! as HTMLDivElement;
+const card = document.querySelector(".js-instruction-card")! as HTMLDivElement;
+export const showInstruction = function () {
+  filter.classList.add("filter-show");
+  card.classList.add("card-show");
+};
+// close instruction
+export const closeInstruction = function () {
+  filter.classList.remove("filter-show");
+  card.classList.remove("card-show");
+};
