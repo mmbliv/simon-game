@@ -50,6 +50,8 @@ export class Simon {
     this.round = 0;
   }
   setAbortController() {
+    // this.abortController = new AbortController();
+    // return this.abortController;
     this.abortController = new AbortController();
     return this.abortController;
   }
@@ -86,7 +88,8 @@ export class Simon {
     // let signal;
     if (this.round > 1) {
       this.toggleAbort = true;
-      console.log(this.toggleAbort);
+      this.stop = true;
+      // console.log(this.toggleAbort);
 
       // console.log(signal, "ooooo");
     }
@@ -94,7 +97,6 @@ export class Simon {
     this.colorsForEachRound = [];
     this.round = 0;
     this.displayRound();
-    // return signal;
   }
   setColorsOfEachRound(n: number) {
     for (let i = 0; i < n; i++) {
@@ -103,23 +105,21 @@ export class Simon {
     }
   }
   async addBlinkToEachBox() {
-    if (this.toggleAbort) {
-      // console.log(this)
-      // console.log(this.abortController.signal, "00000jjjjj");
-      return;
-    } else {
-      await this.waitBlink(2);
-      let position;
-      for (let i = 0; i < this.colorsForEachRound.length; i++) {
-        this.colorsForEachRound[i].style.animationName = "blink";
-        position = this.colorsForEachRound[i].dataset.position!;
-        this.playSound(position);
-        await this.waitBlink(0.3);
-        this.colorsForEachRound[i].style.animationName = "none";
-        await this.waitBlink(0.1);
-      }
-      return this.colorsForEachRound;
+    // console.log(this)
+    // console.log(this.abortController.signal, "00000jjjjj");
+    // return;
+
+    await this.waitBlink(2);
+    let position;
+    for (let i = 0; i < this.colorsForEachRound.length; i++) {
+      this.colorsForEachRound[i].style.animationName = "blink";
+      position = this.colorsForEachRound[i].dataset.position!;
+      this.playSound(position);
+      await this.waitBlink(0.3);
+      this.colorsForEachRound[i].style.animationName = "none";
+      await this.waitBlink(0.1);
     }
+    return this.colorsForEachRound;
   }
   waitBlink(sec: number) {
     return new Promise(function (res) {
@@ -131,21 +131,27 @@ export class Simon {
     const target = e.target as HTMLDivElement;
     let targetColor;
     if (target.classList.contains("trapezoid")) {
+      console.log(this.colorsForEachRound);
       targetColor = this.colorsForEachRound!.shift();
+      console.log(targetColor, "nnnnn");
+      console.log(target, "mmmmmm");
     } else {
       return;
     }
     if (target === targetColor) {
+      console.log("right");
       const position = target.dataset.position!;
       this.playSound(position);
     }
     if (target !== targetColor && target.classList.contains("trapezoid")) {
+      // console.log(target)
+      console.log("llllllose");
       this.playSound("lose");
-
       this.stop = true;
       this.setRoundToZero();
     }
     if (!this.colorsForEachRound!.length && target === targetColor) {
+      console.log("wait");
       this.setColorsOfEachRound(this.getRound());
 
       await this.addBlinkToEachBox();

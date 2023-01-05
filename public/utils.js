@@ -16,9 +16,12 @@ const simon = new Simon(colorBoxes, round, score, colorContainer);
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
         simon.start();
+        // console.log(simon.getRound());
         simon.setColorsOfEachRound(simon.getRound());
+        console.log(simon.round);
         console.log("jojo");
         let colorList = yield simon.addBlinkToEachBox();
+        console.log(colorList, "class");
         if (!colorList) {
             return;
         }
@@ -68,9 +71,11 @@ export function startGame() {
 }
 // startGame();
 export const reStartGame = function () {
+    // console.log("s");
     simon.reSetGame();
     startGame();
     simon.setToggleAbort();
+    // simon.stop = true;
 };
 // debounce
 function debounce(cb, ms) {
