@@ -10,6 +10,7 @@ export class Simon {
   public stop: boolean;
   public ab: any;
   public stopBlink: boolean;
+  public boundEventHandller: (e: MouseEvent) => Promise<void>;
   constructor(
     colorBoxes: NodeListOf<HTMLDivElement>,
     roundNode: HTMLDivElement,
@@ -28,6 +29,7 @@ export class Simon {
     this.stop = false;
     this.ab = null;
     this.stopBlink = false;
+    this.boundEventHandller = this.clickColor.bind(this);
   }
   setToggleAbort() {
     if (this.toggleAbort) {
@@ -89,6 +91,7 @@ export class Simon {
     this.setRandomColorToEachBox();
   }
   reSetGame() {
+    this.colorsNode.removeEventListener("click", this.boundEventHandller);
     // let signal;
     if (this.round > 1) {
       // this.toggleAbort = true;
@@ -106,6 +109,8 @@ export class Simon {
     this.colorsForEachRound = [];
     this.round = 0;
     this.displayRound();
+
+    this.colorsNode.addEventListener("click", this.boundEventHandller);
   }
   setColorsOfEachRound(n: number) {
     for (let i = 0; i < n; i++) {
@@ -186,11 +191,7 @@ export class Simon {
       this.stop = true;
       // this.ab.abort();
       this.setRoundToZero();
-      this.colorsNode.removeEventListener(
-        "click",
-        this.clickColor.bind(this),
-        false
-      );
+      this.colorsNode.removeEventListener("click", this.boundEventHandller);
     }
     if (!this.colorsForEachRound!.length && target === targetColor) {
       console.log("wait");
@@ -198,11 +199,6 @@ export class Simon {
 
       await this.addBlinkToEachBox();
     }
-    this.colorsNode.removeEventListener(
-      "click",
-      this.clickColor.bind(this),
-      true
-    );
   }
   playSound(position: string) {
     const audio = document.querySelector(

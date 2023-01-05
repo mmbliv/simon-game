@@ -71,7 +71,7 @@ export function startGame() {
         //   },
         //   { signal: controller.signal }
         // );
-        colorContainer.addEventListener("click", simon.clickColor.bind(simon));
+        // colorContainer.addEventListener("click", simon.clickColor.bind(simon));
     });
 }
 // startGame();
