@@ -92,19 +92,11 @@ export class Simon {
   }
   reSetGame() {
     this.colorsNode.removeEventListener("click", this.boundEventHandller);
-    // let signal;
     if (this.round > 1) {
-      // this.toggleAbort = true;
-      // console.log(this.toggleAbort);
-      // const con = new AbortController();
-      // this.ab = con;
-      // console.log(this.ab);
       this.stopBlink = true;
       this.ab.abort();
-      // console.log(signal, "ooooo");
     }
     this.stop = true;
-    console.log(this.stopBlink, "stopblink");
     this.setHighestScore();
     this.colorsForEachRound = [];
     this.round = 0;
@@ -120,15 +112,9 @@ export class Simon {
   }
   async addBlinkToEachBox() {
     const timer = setTimeout(async () => {
-      // console.log("after a");
       let position;
       for (let i = 0; i < this.colorsForEachRound.length; i++) {
-        console.log(this.colorsForEachRound.length, "length");
-        console.log(this.colorsForEachRound[i]);
-        console.log(i, "for loop");
-        console.log(this.stopBlink);
         if (this.stopBlink) {
-          console.log("stop");
           return;
         }
         this.colorsForEachRound[i].style.animationName = "blink";
@@ -145,21 +131,6 @@ export class Simon {
       clearTimeout(timer);
     });
 
-    // console.log("after a");
-    // await this.waitBlink(2);
-    // let position;
-    // for (let i = 0; i < this.colorsForEachRound.length; i++) {
-    //   if (this.stopBlink || this.stop) {
-    //     return;
-    //   }
-    //   this.colorsForEachRound[i].style.animationName = "blink";
-    //   position = this.colorsForEachRound[i].dataset.position!;
-    //   this.playSound(position);
-    //   await this.waitBlink(0.3);
-    //   this.colorsForEachRound[i].style.animationName = "none";
-    //   await this.waitBlink(0.1);
-    // }
-
     return this.colorsForEachRound;
   }
   waitBlink(sec: number) {
@@ -172,29 +143,21 @@ export class Simon {
     const target = e.target as HTMLDivElement;
     let targetColor;
     if (target.classList.contains("trapezoid")) {
-      console.log(this.colorsForEachRound);
       targetColor = this.colorsForEachRound!.shift();
-      console.log(targetColor, "nnnnn");
-      console.log(target, "mmmmmm");
     } else {
       return;
     }
     if (target === targetColor) {
-      console.log("right");
       const position = target.dataset.position!;
       this.playSound(position);
     }
     if (target !== targetColor && target.classList.contains("trapezoid")) {
-      // console.log(target)
-      console.log("llllllose");
       this.playSound("lose");
       this.stop = true;
-      // this.ab.abort();
       this.setRoundToZero();
       this.colorsNode.removeEventListener("click", this.boundEventHandller);
     }
     if (!this.colorsForEachRound!.length && target === targetColor) {
-      console.log("wait");
       this.setColorsOfEachRound(this.getRound());
 
       await this.addBlinkToEachBox();

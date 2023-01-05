@@ -10,6 +10,7 @@
   --hight: 6rem;
   --position: -7rem;
 }
+
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   position: relative;
@@ -72,6 +73,7 @@ body {
   height: 5rem;
   width: 5rem;
   border-radius: 50%;
+  /* transition: all 0.5 linear; */
   /* box-shadow: 0.1em 0.1em; */
 }
 .btn-start:hover {
@@ -81,7 +83,13 @@ body {
   /* transform: translate(-0.0005em, -0.0005em);
   box-shadow: 0.15em 0.15em; */
 }
-
+.btn-start:active {
+  top: 52%;
+}
+/* .btn-start:focus-visible {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+} */
 .btn-start:active {
   /* transform: translate(0.05em, 0.05em);
   box-shadow: 0.05em 0.05em; */
@@ -101,14 +109,23 @@ body {
 }
 .trapezoid {
   position: absolute;
+  /* background-image: url(./imgs/Colored.svg); */
+  /* background-repeat: repeat; */
+  /* background-size: cover; */
+  /* background-position: center; */
+  background-color: #fbca1f;
   /* border: 1px solid green; */
   /* animation-name: moveIn;
   animation-duration: 1s;
   animation-fill-mode: forwards; */
   transition: all 0.2s linear;
+  border-radius: 3px;
 }
 .trapezoid:hover {
   scale: 1.1;
+}
+.trapezoid:active {
+  scale: 0.8;
 }
 /* .check {
   background-image: url(./imgs/check.png);
@@ -122,8 +139,9 @@ body {
   height: var(--hight);
   width: var(--width);
   clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
-  background-color: blue;
+  /* background-color: blue; */
 }
+
 .trapezoid.right {
   /* animation-name: moveIn;
   animation-duration: 1s;
@@ -132,21 +150,21 @@ body {
   right: var(--position);
   height: var(--width);
   width: var(--hight);
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
 }
 .trapezoid.bottom {
   height: var(--hight);
   width: var(--width);
   bottom: var(--position);
   clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
-  background-color: brown;
+  /* background-color: brown; */
 }
 .trapezoid.left {
   height: var(--width);
   width: var(--hight);
   left: var(--position);
   clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
 }
 /* deck */
 .deck {
@@ -158,6 +176,10 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   top: 50%;
+  z-index: -100;
+  /* background-image: url(./imgs/Moon.svg); */
+  /* background-position: center; */
+  /* z-index: -100; */
 }
 /* @keyframes moveIn {
   100% {

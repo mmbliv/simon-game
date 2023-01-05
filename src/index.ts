@@ -1,4 +1,3 @@
-import { reStartGame } from "./utils.js";
 import { showInstruction } from "./utils.js";
 import { closeInstruction } from "./utils.js";
 import { game } from "./utils.js";
