@@ -92,8 +92,10 @@ export class Simon {
       this.toggleAbort = true;
       this.stop = true;
       // console.log(this.toggleAbort);
-      const con = new AbortController();
-      this.ab = con;
+      // const con = new AbortController();
+      // this.ab = con;
+      console.log(this.ab);
+      this.ab.abort();
       // console.log(signal, "ooooo");
     }
     this.setHighestScore();
@@ -111,23 +113,36 @@ export class Simon {
     // console.log(this)
     // console.log(this.abortController.signal, "00000jjjjj");
     // return;
-    if (this.ab) {
-      this.ab.abort();
-      console.log("abort");
-      this.ab = null;
-      // return;
-    }
-    console.log("after a");
-    await this.waitBlink(2);
-    let position;
-    for (let i = 0; i < this.colorsForEachRound.length; i++) {
-      this.colorsForEachRound[i].style.animationName = "blink";
-      position = this.colorsForEachRound[i].dataset.position!;
-      this.playSound(position);
-      await this.waitBlink(0.3);
-      this.colorsForEachRound[i].style.animationName = "none";
-      await this.waitBlink(0.1);
-    }
+    const timer = setTimeout(async () => {
+      console.log("after a");
+      // await this.waitBlink(2);
+      let position;
+      for (let i = 0; i < this.colorsForEachRound.length; i++) {
+        this.colorsForEachRound[i].style.animationName = "blink";
+        position = this.colorsForEachRound[i].dataset.position!;
+        this.playSound(position);
+        await this.waitBlink(0.3);
+        this.colorsForEachRound[i].style.animationName = "none";
+        await this.waitBlink(0.1);
+      }
+      // return this.colorsForEachRound;
+    }, 2000);
+    this.ab = new AbortController();
+    this.ab.signal.addEventListener("abort", () => {
+      console.log("timer");
+      clearTimeout(timer);
+    });
+    // console.log("after a");
+    // await this.waitBlink(2);
+    // let position;
+    // for (let i = 0; i < this.colorsForEachRound.length; i++) {
+    //   this.colorsForEachRound[i].style.animationName = "blink";
+    //   position = this.colorsForEachRound[i].dataset.position!;
+    //   this.playSound(position);
+    //   await this.waitBlink(0.3);
+    //   this.colorsForEachRound[i].style.animationName = "none";
+    //   await this.waitBlink(0.1);
+    // }
 
     return this.colorsForEachRound;
   }
