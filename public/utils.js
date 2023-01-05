@@ -75,6 +75,7 @@ export const reStartGame = function () {
     simon.reSetGame();
     startGame();
     simon.setToggleAbort();
+    // simon.ab = null;
     // simon.stop = true;
 };
 // debounce

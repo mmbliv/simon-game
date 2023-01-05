@@ -19,6 +19,7 @@ export class Simon {
         this.clickColor = this.clickColor.bind(this);
         this.toggleAbort = false;
         this.stop = false;
+        this.ab = null;
     }
     setToggleAbort() {
         if (this.toggleAbort) {
@@ -83,6 +84,8 @@ export class Simon {
             this.toggleAbort = true;
             this.stop = true;
             // console.log(this.toggleAbort);
+            const con = new AbortController();
+            this.ab = con;
             // console.log(signal, "ooooo");
         }
         this.setHighestScore();
@@ -101,6 +104,13 @@ export class Simon {
             // console.log(this)
             // console.log(this.abortController.signal, "00000jjjjj");
             // return;
+            if (this.ab) {
+                this.ab.abort();
+                console.log("abort");
+                this.ab = null;
+                // return;
+            }
+            console.log("after a");
             yield this.waitBlink(2);
             let position;
             for (let i = 0; i < this.colorsForEachRound.length; i++) {
