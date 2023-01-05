@@ -96,11 +96,11 @@ export class Simon {
       // const con = new AbortController();
       // this.ab = con;
       // console.log(this.ab);
-      this.stop = true;
       this.stopBlink = true;
       this.ab.abort();
       // console.log(signal, "ooooo");
     }
+    this.stop = true;
     console.log(this.stopBlink, "stopblink");
     this.setHighestScore();
     this.colorsForEachRound = [];
@@ -186,6 +186,11 @@ export class Simon {
       this.stop = true;
       // this.ab.abort();
       this.setRoundToZero();
+      this.colorsNode.removeEventListener(
+        "click",
+        this.clickColor.bind(this),
+        false
+      );
     }
     if (!this.colorsForEachRound!.length && target === targetColor) {
       console.log("wait");
@@ -193,6 +198,11 @@ export class Simon {
 
       await this.addBlinkToEachBox();
     }
+    this.colorsNode.removeEventListener(
+      "click",
+      this.clickColor.bind(this),
+      true
+    );
   }
   playSound(position: string) {
     const audio = document.querySelector(

@@ -13,6 +13,7 @@ const round = document.querySelector(".round");
 const score = document.querySelector(".score");
 const colorContainer = document.querySelector(".circle");
 const simon = new Simon(colorBoxes, round, score, colorContainer);
+let controller = simon.setAbortController();
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
         simon.start();
@@ -57,27 +58,32 @@ export function startGame() {
         // colorContainer.addEventListener("click", simon.clickColor.bind(simon), {
         //   signal: controller.signal,
         // });
-        let controller = simon.setAbortController();
-        colorContainer.addEventListener("click", (e) => {
-            if (simon.stop) {
-                console.log("aborted");
-                controller.abort();
-                simon.stop = false;
-            }
-            else {
-                // e.stopPropagation();
-                simon.clickColor.call(simon, e);
-            }
-        }, { signal: controller.signal });
+        // colorContainer.addEventListener(
+        //   "click",
+        //   (e) => {
+        //     if (simon.stop) {
+        //       console.log("aborted");
+        //       controller.abort();
+        //       simon.stop = false;
+        //     } else {
+        //       simon.clickColor.call(simon, e);
+        //     }
+        //   },
+        //   { signal: controller.signal }
+        // );
+        colorContainer.addEventListener("click", simon.clickColor.bind(simon));
     });
 }
 // startGame();
 export const reStartGame = function () {
     console.log("s");
     simon.reSetGame();
-    colorContainer.removeEventListener("click", simon.clickColor);
+    // simon.stop = false;
+    // controller.abort();
+    console.log("what");
+    // colorContainer.removeEventListener("click", simon.clickColor);
     startGame();
-    simon.setToggleAbort();
+    // simon.setToggleAbort();
     simon.stopBlink = false;
     // simon.ab = null;
     // simon.stop = true;
