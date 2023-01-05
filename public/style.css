@@ -14,6 +14,14 @@
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   position: relative;
+  background-color: #6a63489e;
+  /* z-index: -100; */
+}
+.bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(./imgs/Moon.svg);
+  z-index: -100;
 }
 .display-none {
   display: none;
@@ -48,6 +56,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  /* justify-content: center; */
+  /* align-items: center; */
   /* padding-bottom: 3rem; */
 }
 .how-play {
@@ -56,6 +66,7 @@ body {
   text-align: left;
   text-decoration: underline;
   font-style: italic;
+  width: max-content;
 }
 /* btn */
 .btn-start {
@@ -102,7 +113,7 @@ body {
   position: relative;
   height: var(--width);
   width: var(--width);
-  border: 1px solid rebeccapurple;
+  border: 3px solid rgb(76, 70, 70);
   border-radius: 50%;
   /* margin: auto; */
   margin-top: 5rem;
@@ -171,12 +182,13 @@ body {
   position: absolute;
   height: calc(2.5 * var(--width));
   width: calc(2.5 * var(--width));
-  border: 1px solid black;
+  border: 5px solid rgba(56, 49, 49, 0.811);
   border-radius: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   top: 50%;
   z-index: -100;
+  background-color: whitesmoke;
   /* background-image: url(./imgs/Moon.svg); */
   /* background-position: center; */
   /* z-index: -100; */
@@ -255,6 +267,7 @@ body {
   .title-container {
     padding-bottom: 1rem;
     font-size: xx-large;
+    align-items: center;
   }
 }
 @media (max-width: 500px) {
