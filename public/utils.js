@@ -19,7 +19,7 @@ export function startGame() {
         // console.log(simon.getRound());
         simon.setColorsOfEachRound(simon.getRound());
         console.log(simon.round);
-        console.log("jojo");
+        // console.log("jojo");
         let colorList = yield simon.addBlinkToEachBox();
         console.log(colorList, "class");
         if (!colorList) {
@@ -60,10 +60,12 @@ export function startGame() {
         let controller = simon.setAbortController();
         colorContainer.addEventListener("click", (e) => {
             if (simon.stop) {
+                console.log("aborted");
                 controller.abort();
                 simon.stop = false;
             }
             else {
+                // e.stopPropagation();
                 simon.clickColor.call(simon, e);
             }
         }, { signal: controller.signal });
@@ -71,10 +73,12 @@ export function startGame() {
 }
 // startGame();
 export const reStartGame = function () {
-    // console.log("s");
+    console.log("s");
     simon.reSetGame();
+    colorContainer.removeEventListener("click", simon.clickColor);
     startGame();
     simon.setToggleAbort();
+    simon.stopBlink = false;
     // simon.ab = null;
     // simon.stop = true;
 };
@@ -83,7 +87,7 @@ function debounce(cb, ms) {
     let timer;
     return () => {
         clearTimeout(timer);
-        timer = setTimeout(() => cb(), 1000);
+        timer = setTimeout(() => cb(), ms);
     };
 }
 export const game = debounce(reStartGame, 1000);

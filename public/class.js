@@ -20,6 +20,7 @@ export class Simon {
         this.toggleAbort = false;
         this.stop = false;
         this.ab = null;
+        this.stopBlink = false;
     }
     setToggleAbort() {
         if (this.toggleAbort) {
@@ -81,15 +82,17 @@ export class Simon {
     reSetGame() {
         // let signal;
         if (this.round > 1) {
-            this.toggleAbort = true;
-            this.stop = true;
+            // this.toggleAbort = true;
             // console.log(this.toggleAbort);
             // const con = new AbortController();
             // this.ab = con;
-            console.log(this.ab);
+            // console.log(this.ab);
+            this.stop = true;
+            this.stopBlink = true;
             this.ab.abort();
             // console.log(signal, "ooooo");
         }
+        console.log(this.stopBlink, "stopblink");
         this.setHighestScore();
         this.colorsForEachRound = [];
         this.round = 0;
@@ -103,14 +106,18 @@ export class Simon {
     }
     addBlinkToEachBox() {
         return __awaiter(this, void 0, void 0, function* () {
-            // console.log(this)
-            // console.log(this.abortController.signal, "00000jjjjj");
-            // return;
             const timer = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                console.log("after a");
-                // await this.waitBlink(2);
+                // console.log("after a");
                 let position;
                 for (let i = 0; i < this.colorsForEachRound.length; i++) {
+                    console.log(this.colorsForEachRound.length, "length");
+                    console.log(this.colorsForEachRound[i]);
+                    console.log(i, "for loop");
+                    console.log(this.stopBlink);
+                    if (this.stopBlink) {
+                        console.log("stop");
+                        return;
+                    }
                     this.colorsForEachRound[i].style.animationName = "blink";
                     position = this.colorsForEachRound[i].dataset.position;
                     this.playSound(position);
@@ -118,7 +125,6 @@ export class Simon {
                     this.colorsForEachRound[i].style.animationName = "none";
                     yield this.waitBlink(0.1);
                 }
-                // return this.colorsForEachRound;
             }), 2000);
             this.ab = new AbortController();
             this.ab.signal.addEventListener("abort", () => {
@@ -129,6 +135,9 @@ export class Simon {
             // await this.waitBlink(2);
             // let position;
             // for (let i = 0; i < this.colorsForEachRound.length; i++) {
+            //   if (this.stopBlink || this.stop) {
+            //     return;
+            //   }
             //   this.colorsForEachRound[i].style.animationName = "blink";
             //   position = this.colorsForEachRound[i].dataset.position!;
             //   this.playSound(position);
@@ -167,6 +176,7 @@ export class Simon {
                 console.log("llllllose");
                 this.playSound("lose");
                 this.stop = true;
+                // this.ab.abort();
                 this.setRoundToZero();
             }
             if (!this.colorsForEachRound.length && target === targetColor) {
