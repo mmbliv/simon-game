@@ -74,20 +74,6 @@ export function startGame() {
         // colorContainer.addEventListener("click", simon.clickColor.bind(simon));
     });
 }
-// startGame();
-export const reStartGame = function () {
-    console.log("s");
-    simon.reSetGame();
-    // simon.stop = false;
-    // controller.abort();
-    console.log("what");
-    // colorContainer.removeEventListener("click", simon.clickColor);
-    startGame();
-    // simon.setToggleAbort();
-    simon.stopBlink = false;
-    // simon.ab = null;
-    // simon.stop = true;
-};
 // debounce
 function debounce(cb, ms) {
     let timer;
@@ -96,7 +82,23 @@ function debounce(cb, ms) {
         timer = setTimeout(() => cb(), ms);
     };
 }
-export const game = debounce(reStartGame, 1000);
+// startGame();
+const start = debounce(startGame, 1000);
+export const reStartGame = function () {
+    console.log("s");
+    simon.reSetGame();
+    // simon.stop = false;
+    // controller.abort();
+    console.log("what");
+    // colorContainer.removeEventListener("click", simon.clickColor);
+    start();
+    // simon.setToggleAbort();
+    simon.stopBlink = false;
+    // simon.ab = null;
+    // simon.stop = true;
+};
+// export const game = debounce(reStartGame, 1000);
+export const game = reStartGame;
 // show instruction
 const filter = document.querySelector(".js-filter");
 const card = document.querySelector(".js-instruction-card");
