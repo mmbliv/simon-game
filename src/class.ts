@@ -164,7 +164,10 @@ export class Simon {
     // If we hit the right button, play the sound
     if (target === targetColor) {
       const position = target.dataset.position!;
+
+      target.style.animationName = "blink";
       await this.playSound(position);
+      target.style.animationName = "none";
     }
     // If hit the wrong button, play the lose sound.
     // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
