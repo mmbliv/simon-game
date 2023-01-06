@@ -79,16 +79,17 @@ export class Simon {
         this.setRandomColorToEachBox();
     }
     reSetGame() {
+        var _a;
         this.colorsNode.removeEventListener("click", this.boundEventHandller);
-        if (this.round > 1) {
-            // this.stopBlink = true;
-            this.abortController.abort();
-        }
-        // this.stop = true;
+        // if (this.round > 1) {
+        //   this.abortController!.abort();
+        // }
+        (_a = this.abortController) === null || _a === void 0 ? void 0 : _a.abort();
         this.setHighestScore();
         this.colorsForEachRound = [];
         this.round = 1;
         this.displayRound();
+        this.abortController = new AbortController();
         this.colorsNode.addEventListener("click", this.boundEventHandller);
     }
     setColorsOfEachRound(n) {
@@ -119,7 +120,7 @@ export class Simon {
             // When hit the start button in the middle of the game(this.round>1)
             // the abort event will be triggered.
             // Then the timer will bed cleared.
-            this.abortController = new AbortController();
+            // this.abortController = new AbortController();
             this.abortController.signal.addEventListener("abort", () => {
                 // console.log("timer");
                 clearTimeout(timer);
@@ -133,6 +134,7 @@ export class Simon {
         });
     }
     clickColor(e) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const target = e.target;
             let targetColor;
@@ -151,14 +153,12 @@ export class Simon {
                 this.playSound(position);
             }
             // If hit the wrong button, play the lose sound.
-            // Set the round state to be 0, that is because we will check the this.round when we
-            // restart the game, if we are in the middle of the game(this.round>1) we'd like
-            // to abort the blink and sound-making process.
             // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
             if (target !== targetColor) {
                 this.playSound("lose");
                 // this.stop = true;
                 // this.setRoundToZero();
+                (_a = this.abortController) === null || _a === void 0 ? void 0 : _a.abort();
                 this.round = 1;
                 this.colorsNode.removeEventListener("click", this.boundEventHandller);
             }
@@ -167,7 +167,7 @@ export class Simon {
             // and wait those colors to be displayed with asych function this.addBlinkToEachBox
             if (!this.colorsForEachRound.length && target === targetColor) {
                 this.setColorsOfEachRound(this.getRound());
-                console.log(this.round);
+                // console.log(this.round);
                 yield this.addBlinkToEachBox();
             }
         });
