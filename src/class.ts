@@ -4,12 +4,8 @@ export class Simon {
   public round: number;
   public roundNode: HTMLDivElement;
   public scoreNode: HTMLDivElement;
-  // public abortController: any;
   public colorsNode: HTMLDivElement;
-  // public toggleAbort: boolean;
-  // public stop: boolean;
   public abortController: AbortController | undefined;
-  // public stopBlink: boolean;
   public boundEventHandller: (e: MouseEvent) => Promise<void>;
   constructor(
     colorBoxes: NodeListOf<HTMLDivElement>,
@@ -22,20 +18,10 @@ export class Simon {
     this.round = 1;
     this.roundNode = roundNode;
     this.scoreNode = scoreNode;
-    // this.abortController = {};
     this.colorsNode = colorsNode;
-    // this.clickColor = this.clickColor.bind(this);
-    // this.toggleAbort = false;
-    // this.stop = false;
     this.abortController = undefined;
-    // this.stopBlink = false;
     this.boundEventHandller = this.clickColor.bind(this);
   }
-  // setToggleAbort() {
-  //   if (this.toggleAbort) {
-  //     this.toggleAbort = false;
-  //   }
-  // }
 
   setHighestScore() {
     if (!localStorage.high) {
@@ -47,18 +33,6 @@ export class Simon {
     }
     this.scoreNode.textContent = localStorage.getItem("high");
   }
-
-  // setRoundToZero() {
-  //   this.setHighestScore();
-  //   this.round = 0;
-  // }
-
-  // setAbortController() {
-  // this.abortController = new AbortController();
-  // return this.abortController;
-  // this.abortController = new AbortController();
-  // return this.abortController;
-  // }
 
   getRound() {
     this.round++;
@@ -122,9 +96,6 @@ export class Simon {
     const timer = setTimeout(async () => {
       let position;
       for (let i = 0; i < this.colorsForEachRound.length; i++) {
-        // if (this.stopBlink) {
-        //   return;
-        // }
         this.colorsForEachRound[i].style.animationName = "blink";
         position = this.colorsForEachRound[i].dataset.position!;
         await this.waitBlink(0.3);
@@ -153,6 +124,7 @@ export class Simon {
   async clickColor(e: MouseEvent) {
     const target = e.target as HTMLDivElement;
     let targetColor;
+
     // We need to make sure that we click on the trapezoid element.
     // And then shift one element out from colorlist that we just generated
     // Otherwise, return
@@ -161,41 +133,40 @@ export class Simon {
     } else {
       return;
     }
+
     // If we hit the right button, play the sound
     if (target === targetColor) {
       const position = target.dataset.position!;
-
       target.style.animationName = "blink";
+      await this.waitBlink(0.1);
+      console.log(target.style.animationName);
       await this.playSound(position);
       target.style.animationName = "none";
     }
+
     // If hit the wrong button, play the lose sound.
     // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
     if (target !== targetColor) {
       await this.playSound("lose");
-      // this.stop = true;
-      // this.setRoundToZero();
       this.abortController?.abort();
       this.round = 1;
       this.colorsNode.removeEventListener("click", this.boundEventHandller);
     }
+
     // After we click all the button right in each round, we
     // use this.setColorsOfEachRound to add another colorlist,
     // and wait those colors to be displayed with asych function this.addBlinkToEachBox
     if (!this.colorsForEachRound!.length && target === targetColor) {
       this.setColorsOfEachRound(this.getRound());
-      // console.log(this.round);
       await this.addBlinkToEachBox();
     }
   }
+
   async playSound(position: string) {
     const audio = document.querySelector(
       `audio[data-audio="${position}"]`
     )! as HTMLAudioElement;
     audio.currentTime = 0;
-    // console.log(audio.volume);
-    // audio.duration
-    // audio.volume = 2;
     audio.play();
     // await this.waitBlink(1);
     // audio.pause();

@@ -14,20 +14,10 @@ export class Simon {
         this.round = 1;
         this.roundNode = roundNode;
         this.scoreNode = scoreNode;
-        // this.abortController = {};
         this.colorsNode = colorsNode;
-        // this.clickColor = this.clickColor.bind(this);
-        // this.toggleAbort = false;
-        // this.stop = false;
         this.abortController = undefined;
-        // this.stopBlink = false;
         this.boundEventHandller = this.clickColor.bind(this);
     }
-    // setToggleAbort() {
-    //   if (this.toggleAbort) {
-    //     this.toggleAbort = false;
-    //   }
-    // }
     setHighestScore() {
         if (!localStorage.high) {
             localStorage.setItem("high", `${this.round}`);
@@ -39,16 +29,6 @@ export class Simon {
         }
         this.scoreNode.textContent = localStorage.getItem("high");
     }
-    // setRoundToZero() {
-    //   this.setHighestScore();
-    //   this.round = 0;
-    // }
-    // setAbortController() {
-    // this.abortController = new AbortController();
-    // return this.abortController;
-    // this.abortController = new AbortController();
-    // return this.abortController;
-    // }
     getRound() {
         this.round++;
         this.displayRound();
@@ -106,9 +86,6 @@ export class Simon {
             const timer = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 let position;
                 for (let i = 0; i < this.colorsForEachRound.length; i++) {
-                    // if (this.stopBlink) {
-                    //   return;
-                    // }
                     this.colorsForEachRound[i].style.animationName = "blink";
                     position = this.colorsForEachRound[i].dataset.position;
                     yield this.waitBlink(0.3);
@@ -151,6 +128,8 @@ export class Simon {
             if (target === targetColor) {
                 const position = target.dataset.position;
                 target.style.animationName = "blink";
+                yield this.waitBlink(0.1);
+                console.log(target.style.animationName);
                 yield this.playSound(position);
                 target.style.animationName = "none";
             }
@@ -158,8 +137,6 @@ export class Simon {
             // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
             if (target !== targetColor) {
                 yield this.playSound("lose");
-                // this.stop = true;
-                // this.setRoundToZero();
                 (_a = this.abortController) === null || _a === void 0 ? void 0 : _a.abort();
                 this.round = 1;
                 this.colorsNode.removeEventListener("click", this.boundEventHandller);
@@ -169,7 +146,6 @@ export class Simon {
             // and wait those colors to be displayed with asych function this.addBlinkToEachBox
             if (!this.colorsForEachRound.length && target === targetColor) {
                 this.setColorsOfEachRound(this.getRound());
-                // console.log(this.round);
                 yield this.addBlinkToEachBox();
             }
         });
@@ -178,9 +154,6 @@ export class Simon {
         return __awaiter(this, void 0, void 0, function* () {
             const audio = document.querySelector(`audio[data-audio="${position}"]`);
             audio.currentTime = 0;
-            // console.log(audio.volume);
-            // audio.duration
-            // audio.volume = 2;
             audio.play();
             // await this.waitBlink(1);
             // audio.pause();
