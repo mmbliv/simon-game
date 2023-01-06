@@ -280,8 +280,8 @@ body {
     --position: -3.5rem;
   }
   .main-container {
-    gap: 8rem;
-    margin-top: 3rem;
+    gap: 4rem;
+    margin-top: 2rem;
   }
   .filter-show {
     top: -3rem;
