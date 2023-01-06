@@ -13,15 +13,20 @@ const round = document.querySelector(".round");
 const score = document.querySelector(".score");
 const colorContainer = document.querySelector(".circle");
 const simon = new Simon(colorBoxes, round, score, colorContainer);
-let controller = simon.setAbortController();
+// let controller = simon.setAbortController();
 export function startGame() {
     return __awaiter(this, void 0, void 0, function* () {
+        // simon.start() will display the highestscore, and set random color
+        // for each trapezoid box
         simon.start();
-        simon.setColorsOfEachRound(simon.getRound());
-        let colorList = yield simon.addBlinkToEachBox();
-        if (!colorList) {
-            return;
-        }
+        // simon.setColorsOfEachRound(1) will choose one trapezoid to blink to start the game
+        simon.setColorsOfEachRound(1);
+        // Then wait the trapezoid to blink and make a sound
+        yield simon.addBlinkToEachBox();
+        // let colorList = await simon.addBlinkToEachBox();
+        // if (!colorList) {
+        //   return;
+        // }
     });
 }
 // debounce
@@ -33,11 +38,16 @@ function debounce(cb, ms) {
     };
 }
 // startGame();
+// Because the addBlinkToEachBox method in startGame function is asynchronous,
+// when we keep hitting the start button, those blink and sound-making will happen many times.
+// So, we use a debounce function to make startGame fucntion can only be triggered once every one second.
+// The reason that we did not wrap the reSetGame method into the debounce funtion is because
+// sometimes we want to stop the game immediately, if we put reSetGame into dedounce funtion,
+// there will be a delay of this feature.
 const start = debounce(startGame, 1000);
 export const game = function () {
     simon.reSetGame();
     start();
-    simon.stopBlink = false;
 };
 // show instruction
 const filter = document.querySelector(".js-filter");

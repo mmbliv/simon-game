@@ -11,46 +11,44 @@ export class Simon {
     constructor(colorBoxes, roundNode, scoreNode, colorsNode) {
         this.colorBoxes = colorBoxes;
         this.colorsForEachRound = [];
-        this.round = 0;
+        this.round = 1;
         this.roundNode = roundNode;
         this.scoreNode = scoreNode;
-        this.abortController = {};
+        // this.abortController = {};
         this.colorsNode = colorsNode;
-        this.clickColor = this.clickColor.bind(this);
-        this.toggleAbort = false;
-        this.stop = false;
-        this.ab = null;
-        this.stopBlink = false;
+        // this.clickColor = this.clickColor.bind(this);
+        // this.toggleAbort = false;
+        // this.stop = false;
+        this.abortController = undefined;
+        // this.stopBlink = false;
         this.boundEventHandller = this.clickColor.bind(this);
     }
-    setToggleAbort() {
-        if (this.toggleAbort) {
-            this.toggleAbort = false;
-        }
-    }
+    // setToggleAbort() {
+    //   if (this.toggleAbort) {
+    //     this.toggleAbort = false;
+    //   }
+    // }
     setHighestScore() {
         if (!localStorage.high) {
-            // console.log("no");
             localStorage.setItem("high", `${this.round}`);
         }
         else {
-            // console.log("you");
             if (this.round > +localStorage.high) {
                 localStorage.setItem("high", `${this.round}`);
             }
         }
         this.scoreNode.textContent = localStorage.getItem("high");
     }
-    setRoundToZero() {
-        this.setHighestScore();
-        this.round = 0;
-    }
-    setAbortController() {
-        // this.abortController = new AbortController();
-        // return this.abortController;
-        this.abortController = new AbortController();
-        return this.abortController;
-    }
+    // setRoundToZero() {
+    //   this.setHighestScore();
+    //   this.round = 0;
+    // }
+    // setAbortController() {
+    // this.abortController = new AbortController();
+    // return this.abortController;
+    // this.abortController = new AbortController();
+    // return this.abortController;
+    // }
     getRound() {
         this.round++;
         this.displayRound();
@@ -83,13 +81,13 @@ export class Simon {
     reSetGame() {
         this.colorsNode.removeEventListener("click", this.boundEventHandller);
         if (this.round > 1) {
-            this.stopBlink = true;
-            this.ab.abort();
+            // this.stopBlink = true;
+            this.abortController.abort();
         }
-        this.stop = true;
+        // this.stop = true;
         this.setHighestScore();
         this.colorsForEachRound = [];
-        this.round = 0;
+        this.round = 1;
         this.displayRound();
         this.colorsNode.addEventListener("click", this.boundEventHandller);
     }
@@ -101,12 +99,15 @@ export class Simon {
     }
     addBlinkToEachBox() {
         return __awaiter(this, void 0, void 0, function* () {
+            // In order to abort this blink and sound-making in the middle of the game,
+            // we wrap those process into a timer.
+            // And we use AbortController API to listen to the abort event.
             const timer = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 let position;
                 for (let i = 0; i < this.colorsForEachRound.length; i++) {
-                    if (this.stopBlink) {
-                        return;
-                    }
+                    // if (this.stopBlink) {
+                    //   return;
+                    // }
                     this.colorsForEachRound[i].style.animationName = "blink";
                     position = this.colorsForEachRound[i].dataset.position;
                     this.playSound(position);
@@ -115,9 +116,12 @@ export class Simon {
                     yield this.waitBlink(0.1);
                 }
             }), 2000);
-            this.ab = new AbortController();
-            this.ab.signal.addEventListener("abort", () => {
-                console.log("timer");
+            // When hit the start button in the middle of the game(this.round>1)
+            // the abort event will be triggered.
+            // Then the timer will bed cleared.
+            this.abortController = new AbortController();
+            this.abortController.signal.addEventListener("abort", () => {
+                // console.log("timer");
                 clearTimeout(timer);
             });
             return this.colorsForEachRound;
@@ -132,24 +136,38 @@ export class Simon {
         return __awaiter(this, void 0, void 0, function* () {
             const target = e.target;
             let targetColor;
+            // We need to make sure that we click on the trapezoid element.
+            // And then shift one element out from colorlist that we just generated
+            // Otherwise, return
             if (target.classList.contains("trapezoid")) {
                 targetColor = this.colorsForEachRound.shift();
             }
             else {
                 return;
             }
+            // If we hit the right button, play the sound
             if (target === targetColor) {
                 const position = target.dataset.position;
                 this.playSound(position);
             }
-            if (target !== targetColor && target.classList.contains("trapezoid")) {
+            // If hit the wrong button, play the lose sound.
+            // Set the round state to be 0, that is because we will check the this.round when we
+            // restart the game, if we are in the middle of the game(this.round>1) we'd like
+            // to abort the blink and sound-making process.
+            // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
+            if (target !== targetColor) {
                 this.playSound("lose");
-                this.stop = true;
-                this.setRoundToZero();
+                // this.stop = true;
+                // this.setRoundToZero();
+                this.round = 1;
                 this.colorsNode.removeEventListener("click", this.boundEventHandller);
             }
+            // After we click all the button right in each round, we
+            // use this.setColorsOfEachRound to add another colorlist,
+            // and wait those colors to be displayed with asych function this.addBlinkToEachBox
             if (!this.colorsForEachRound.length && target === targetColor) {
                 this.setColorsOfEachRound(this.getRound());
+                console.log(this.round);
                 yield this.addBlinkToEachBox();
             }
         });
