@@ -123,6 +123,7 @@ export class Simon {
             // Otherwise, return
             if (target.classList.contains("trapezoid")) {
                 targetColor = this.colorsForEachRound.shift();
+                e.stopPropagation();
             }
             else {
                 return;
