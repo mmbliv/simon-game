@@ -14,7 +14,7 @@
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   position: relative;
-  background-color: #6a63489e;
+  background-color: wheat;
   /* z-index: -100; */
 }
 .bg {
@@ -212,6 +212,9 @@ body {
 .instruction-card {
   position: relative;
 }
+.instruction-content {
+  line-height: 1.6;
+}
 .close-btn {
   position: absolute;
   top: 0.5rem;
@@ -222,7 +225,7 @@ body {
   position: absolute;
   width: 70%;
   padding: 3rem 2rem;
-  background-color: #daca92;
+  background-color: wheat;
   border: 2px solid black;
   left: 50%;
   transform: translate(-50%, -50%);
