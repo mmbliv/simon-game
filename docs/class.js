@@ -85,11 +85,15 @@ export class Simon {
             // And we use AbortController API to listen to the abort event.
             const timer = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 let position;
+                console.log("out");
                 for (let i = 0; i < this.colorsForEachRound.length; i++) {
+                    console.log("in");
                     this.colorsForEachRound[i].style.animationName = "blink";
+                    console.log(this.colorsForEachRound);
                     position = this.colorsForEachRound[i].dataset.position;
                     yield this.waitBlink(0.3);
                     yield this.playSound(position);
+                    console.log(this.colorsForEachRound);
                     this.colorsForEachRound[i].style.animationName = "none";
                     yield this.waitBlink(0.1);
                 }
@@ -99,7 +103,6 @@ export class Simon {
             // Then the timer will bed cleared.
             // this.abortController = new AbortController();
             this.abortController.signal.addEventListener("abort", () => {
-                // console.log("timer");
                 clearTimeout(timer);
             });
             return this.colorsForEachRound;

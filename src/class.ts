@@ -95,11 +95,15 @@ export class Simon {
 
     const timer = setTimeout(async () => {
       let position;
+      console.log("out");
       for (let i = 0; i < this.colorsForEachRound.length; i++) {
+        console.log("in");
         this.colorsForEachRound[i].style.animationName = "blink";
+        console.log(this.colorsForEachRound);
         position = this.colorsForEachRound[i].dataset.position!;
         await this.waitBlink(0.3);
         await this.playSound(position);
+        console.log(this.colorsForEachRound);
         this.colorsForEachRound[i].style.animationName = "none";
         await this.waitBlink(0.1);
       }
@@ -109,7 +113,6 @@ export class Simon {
     // Then the timer will bed cleared.
     // this.abortController = new AbortController();
     this.abortController!.signal.addEventListener("abort", () => {
-      // console.log("timer");
       clearTimeout(timer);
     });
 
@@ -130,6 +133,7 @@ export class Simon {
     // Otherwise, return
     if (target.classList.contains("trapezoid")) {
       targetColor = this.colorsForEachRound!.shift();
+      e.stopPropagation();
     } else {
       return;
     }
