@@ -177,11 +177,13 @@ export class Simon {
     playSound(position) {
         return __awaiter(this, void 0, void 0, function* () {
             const audio = document.querySelector(`audio[data-audio="${position}"]`);
-            audio.currentTime = 0.1;
+            audio.currentTime = 0;
+            // console.log(audio.volume);
             // audio.duration
+            // audio.volume = 2;
             audio.play();
-            yield this.waitBlink(1);
-            audio.pause();
+            // await this.waitBlink(1);
+            // audio.pause();
         });
     }
 }

@@ -192,10 +192,12 @@ export class Simon {
     const audio = document.querySelector(
       `audio[data-audio="${position}"]`
     )! as HTMLAudioElement;
-    audio.currentTime = 0.1;
+    audio.currentTime = 0;
+    // console.log(audio.volume);
     // audio.duration
+    // audio.volume = 2;
     audio.play();
-    await this.waitBlink(1);
-    audio.pause();
+    // await this.waitBlink(1);
+    // audio.pause();
   }
 }
