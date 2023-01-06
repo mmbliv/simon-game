@@ -127,8 +127,8 @@ export class Simon {
         // }
         this.colorsForEachRound[i].style.animationName = "blink";
         position = this.colorsForEachRound[i].dataset.position!;
-        this.playSound(position);
         await this.waitBlink(0.3);
+        await this.playSound(position);
         this.colorsForEachRound[i].style.animationName = "none";
         await this.waitBlink(0.1);
       }
@@ -164,12 +164,12 @@ export class Simon {
     // If we hit the right button, play the sound
     if (target === targetColor) {
       const position = target.dataset.position!;
-      this.playSound(position);
+      await this.playSound(position);
     }
     // If hit the wrong button, play the lose sound.
     // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
     if (target !== targetColor) {
-      this.playSound("lose");
+      await this.playSound("lose");
       // this.stop = true;
       // this.setRoundToZero();
       this.abortController?.abort();
@@ -185,11 +185,14 @@ export class Simon {
       await this.addBlinkToEachBox();
     }
   }
-  playSound(position: string) {
+  async playSound(position: string) {
     const audio = document.querySelector(
       `audio[data-audio="${position}"]`
     )! as HTMLAudioElement;
     audio.currentTime = 0.1;
+    // audio.duration
     audio.play();
+    await this.waitBlink(1);
+    audio.pause();
   }
 }

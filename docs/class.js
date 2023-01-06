@@ -111,8 +111,8 @@ export class Simon {
                     // }
                     this.colorsForEachRound[i].style.animationName = "blink";
                     position = this.colorsForEachRound[i].dataset.position;
-                    this.playSound(position);
                     yield this.waitBlink(0.3);
+                    yield this.playSound(position);
                     this.colorsForEachRound[i].style.animationName = "none";
                     yield this.waitBlink(0.1);
                 }
@@ -150,12 +150,12 @@ export class Simon {
             // If we hit the right button, play the sound
             if (target === targetColor) {
                 const position = target.dataset.position;
-                this.playSound(position);
+                yield this.playSound(position);
             }
             // If hit the wrong button, play the lose sound.
             // Remove the eventlistener of this.colorNode, otherwise it will keep add eventlistener to it.
             if (target !== targetColor) {
-                this.playSound("lose");
+                yield this.playSound("lose");
                 // this.stop = true;
                 // this.setRoundToZero();
                 (_a = this.abortController) === null || _a === void 0 ? void 0 : _a.abort();
@@ -173,8 +173,13 @@ export class Simon {
         });
     }
     playSound(position) {
-        const audio = document.querySelector(`audio[data-audio="${position}"]`);
-        audio.currentTime = 0.1;
-        audio.play();
+        return __awaiter(this, void 0, void 0, function* () {
+            const audio = document.querySelector(`audio[data-audio="${position}"]`);
+            audio.currentTime = 0.1;
+            // audio.duration
+            audio.play();
+            yield this.waitBlink(1);
+            audio.pause();
+        });
     }
 }
