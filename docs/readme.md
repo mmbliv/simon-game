@@ -31,4 +31,5 @@
 
 ## Other information
 
-While the game can be played on a computer, certain features, such as sound playback, may not function properly on mobile devices.
+- This project is slightly different from the traditional Simon game. Specifically, instead of adding a new button at the end of each round, it will randomly generate some buttons for each round.
+- While the game can be played on a computer, certain features, such as sound playback, may not function properly on mobile devices.
